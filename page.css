@@ -1,0 +1,35 @@
+body{
+    background-color: lightskyblue;
+    font-size: 120%;
+}
+p{
+    margin: 0.1lh;
+}
+.mono{
+    font-family: monospace;
+}
+small{
+    display: inline flow-root;
+    font-size: 75%;
+    line-height: 1.2;
+}
+li>:is(h2,h3):first-child{
+    margin-bottom: 0;
+}
+a{
+    &:link{
+        color: blue;
+    }
+    &:visited{
+        color: #993153;
+    }
+    &.concept{
+        font-variant: small-caps;
+    }
+}
+hr{
+    width: 5%;
+    height: 0;
+    border: none;
+    border-top: 3px double black;
+}
