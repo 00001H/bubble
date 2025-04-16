@@ -23,9 +23,9 @@ a{
     &:visited{
         color: #993153;
     }
-    &.concept{
-        font-variant: small-caps;
-    }
+}
+.concept{
+    font-variant: small-caps;
 }
 hr{
     width: 5%;
