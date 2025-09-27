@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../page.css">
+        <title>Bubble Personal View Test - The Bubble</title>
+        <style>
+            h2{
+                margin-bottom: 0;
+            }
+            input[type="radio"]{
+                box-sizing: border-box;
+                appearance: none;
+                width: 16px;
+                height: 16px;
+                border: 0px solid red;
+                border-radius: 50%;
+                background-color: white;
+                &:checked{
+                    transition: border-width 200ms ease-out, border-color 200ms ease-out;
+                    border-width: 4px;
+                }
+                &:hover:not(:checked){
+                    border-width: 4px;
+                    border-color: #ff000060;
+                }
+            }
+            ol{
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+            }
+            .rscore{
+                font-weight: bold;
+                font-size: larger;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Bubble Personal View Test</h1>
+        <p>This <em>unofficial</em> test tells you how likely and to what extent your personal views aligns with <em><strong>(in my personal opinion)</strong></em> extensions and/or corollaries of the principles of the Bubble. <strong>The category terms used in the result are made up. This is not a rigorous personality test, and I am not a professional. I disclaim any warranty about the results.</strong></p>
+        <ol>
+            <li data-cat="theoce" data-mul="1"><p>It is deeply dissatisfying to get an experimental result that contradicts theoretical predictions yet is unexplainable.</p></li>
+            <li data-cat="theoce" data-mul="1"><p>It is absurd that humans designed computer chips and systems ourselves yet we cannot tell for sure what some code's runtime is without field testing.</p></li>
+            <li data-cat="frv" data-mul="-1"><p>Good software today that will become unmaintainable/useless in 10 year's time is better than perfect software 30 years later that will be eternally useful.</p></li>
+            <li data-cat="frv" data-mul="1"><p>If I spend or will spend hours every day using a piece of software, I can tolerate a very steep learning curve and potentially spending months or even a year learning how to use it the most efficiently (e.g. learning the quickest way to do various tasks).</p></li>
+            <li data-cat="eng" data-mul="1"><p>LLM AI technology shouldn't use natural language.</p></li>
+            <li data-cat="eng" data-mul="1"><p>Learing mathematics/programming is worth it because it changes to one's way of thinking (in a good way), even disregarding practical applications.</p></li>
+        </ol>
+        <summary>Your results:</summary>
+        <button id="results">Get my results!</button>
+        <script defer>
+const CATEGORIES = {
+    "theoce": {"desc":"Theory-centrism","edesc":"the idea that practical tools and experimental results are useless without theory"},
+    "frv": {"desc":"Foreverism","edesc":"The idea that paying a large upfront cost right away in order to reap benefits potentially forever into the future is almost always worth it"},
+    "eng": {"desc":"Engineerism","edesc":"The idea that engineered things are usually better, or at least capable of being better (given a competent designer) than natural things"}
+};
+for(const cat in CATEGORIES){
+    CATEGORIES[cat].max = 0;
+}
+const OPTS = ["Strongly disagree","Disagree","Somewhat disagree","Neutral","Somewhat agree","Agree","Strongly agree"];
+let MAXV = Math.round((OPTS.length-1)/2);
+/**
+ * @type ({category: string, multiplier: number, response: number})[]
+*/
+const questions = [];
+let value;
+const result_btn = document.getElementById("results");
+result_btn.addEventListener("click",() => {
+    const rdiv = document.createElement("div");
+    for(const cat in CATEGORIES){
+        const result = document.createElement("p");
+        rdiv.append(result);
+        result.append(`${CATEGORIES[cat].desc}: `);
+        let score = 0;
+        for(const q of questions){
+            if(q.category === cat){
+                score += q.multiplier*q.response;
+            }
+        }
+        const scorespan = document.createElement("span");
+        scorespan.classList.add("rscore");
+        scorespan.textContent = `${score}/${CATEGORIES[cat].max}`;
+        result.append(scorespan);
+        result.append(` (${CATEGORIES[cat].edesc})`);
+    }
+    result_btn.replaceWith(rdiv);
+});
+for(const ques of document.getElementsByTagName("li")){
+    value = -MAXV;
+    const qid = questions.length;
+    const cat = ques.getAttribute("data-cat");
+    questions.push({category: cat, multiplier: Number(ques.getAttribute("data-mul")), response: 0});
+    CATEGORIES[cat].max += MAXV;
+    for(const opt of OPTS){
+        const inp = document.createElement("input");
+        inp.addEventListener("change",() => {
+            questions[qid].response = Number(inp.value);
+        });
+        inp.type = "radio";
+        inp.value = value.toString();
+        inp.name = `q${qid}`;
+        inp.id = `${inp.name}/${inp.value}`;
+        const lab = document.createElement("label");
+        lab.htmlFor = inp.id;
+        lab.textContent = opt;
+        ques.append(inp,lab);
+        if(!value){
+            inp.checked = true;
+        }
+        ++value;
+    }
+    ques.append();
+}
+        </script>
+    </body>
+</html>
