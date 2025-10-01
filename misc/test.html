@@ -37,7 +37,7 @@
     </head>
     <body>
         <h1>Bubble Personal View Test</h1>
-        <p>This <em>unofficial</em> test tells you how likely and to what extent your personal views aligns with <em><strong>(in my personal opinion)</strong></em> extensions and/or corollaries of the principles of the Bubble. <strong>The category terms used in the result are made up. This is not a rigorous personality test, and I am not a professional. I disclaim any warranty about the results.</strong></p>
+        <p>This <em>unofficial</em> test tells you how likely and to what extent your personal views aligns with <em><strong>(in my personal opinion)</strong></em> extensions and/or corollaries of the principles of the Bubble. <strong>The category terms used in the result are made up. This is not a rigorous personality test, and I am not a professional. I disclaim any responsibility and give no warranty about the results.</strong></p>
         <ol>
             <li data-cat="theoce" data-mul="1"><p>It is deeply dissatisfying to get an experimental result that contradicts theoretical predictions yet is unexplainable.</p></li>
             <li data-cat="theoce" data-mul="1"><p>It is absurd that humans designed computer chips and systems ourselves yet we cannot tell for sure what some code's runtime is without field testing.</p></li>
@@ -45,6 +45,9 @@
             <li data-cat="frv" data-mul="1"><p>If I spend or will spend hours every day using a piece of software, I can tolerate a very steep learning curve and potentially spending months or even a year learning how to use it the most efficiently (e.g. learning the quickest way to do various tasks).</p></li>
             <li data-cat="eng" data-mul="1"><p>LLM AI technology shouldn't use natural language.</p></li>
             <li data-cat="eng" data-mul="1"><p>Learing mathematics/programming is worth it because it changes to one's way of thinking (in a good way), even disregarding practical applications.</p></li>
+            <li data-cat="eng" data-mul="-1"><p>Prescriptivism is bad outside of standardese or legalese.</p></li>
+            <li data-cat="neut" data-mul="-1"><p><a href="https://www.gnu.org/philosophy/open-source-misses-the-point.html#:~:text=open%20source%20DRM">Open source DRM software is bad.</a></p></li>
+            <li data-cat="neut" data-mul="1"><p>AI models should be uncensored (i.e. with minimal rejections/"alignment").</p></li>
         </ol>
         <summary>Your results:</summary>
         <button id="results">Get my results!</button>
@@ -52,7 +55,8 @@
 const CATEGORIES = {
     "theoce": {"desc":"Theory-centrism","edesc":"the idea that practical tools and experimental results are useless without theory"},
     "frv": {"desc":"Foreverism","edesc":"The idea that paying a large upfront cost right away in order to reap benefits potentially forever into the future is almost always worth it"},
-    "eng": {"desc":"Engineerism","edesc":"The idea that engineered things are usually better, or at least capable of being better (given a competent designer) than natural things"}
+    "eng": {"desc":"Engineerism","edesc":"The idea that engineered things are usually better, or at least capable of being better (given a competent designer) than natural things"},
+    "neut": {"desc":"Neutralism","edesc":"The idea that programs should not prevent users from using them for malicious purposes, if it makes the program more complicated to add the check."}
 };
 for(const cat in CATEGORIES){
     CATEGORIES[cat].max = 0;
